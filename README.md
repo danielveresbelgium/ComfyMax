@@ -446,7 +446,7 @@ Test the complete path:
 
 ## License
 
-Add the chosen project license before public distribution.
+ComfyMax is released under the MIT License. See LICENSE for details.
 
 ## Acknowledgements
 
