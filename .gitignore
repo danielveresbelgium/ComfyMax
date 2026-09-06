@@ -1,0 +1,50 @@
+# ============================================================
+# ComfyMax - Git ignore rules
+# ============================================================
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Streamlit
+.streamlit/
+
+# Local ComfyMax configuration
+config/app.json
+config/settings.json
+
+# Generated / temporary media
+output/
+outputs/
+temp/
+tmp/
+*.mp4
+*.webm
+*.mov
+
+# Logs
+*.log
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# IDE / editor
+.vscode/
+.idea/
+
+# Environment and secrets
+.env
+.env.*
+*.key
+
+# Temporary / backup files
+*.bak
+*.tmp
+*~

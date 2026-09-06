@@ -1,0 +1,5 @@
+{
+  "lmstudio_url": "http://127.0.0.1:1234",
+  "comfyui_url": "http://127.0.0.1:8188",
+  "temperature": 0.7
+}
