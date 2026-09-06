@@ -103,9 +103,56 @@ ComfyMax/
 └─ .gitignore
 ```
 
-## First setup
+## Installation
 
-### 1. Test ComfyUI independently
+### 1. Download ComfyMax
+
+Clone the repository:
+
+``` powershell
+git clone https://github.com/danielveresbelgium/ComfyMax.git
+cd ComfyMax
+```
+
+You can also download the repository as a ZIP from GitHub and extract it
+to a folder of your choice.
+
+### 2. Create a Python virtual environment
+
+A local virtual environment is recommended so ComfyMax dependencies stay
+separate from other Python installations.
+
+From the ComfyMax folder:
+
+``` powershell
+python -m venv .venv
+```
+
+Activate it:
+
+``` powershell
+.\.venv\Scripts\Activate.ps1
+```
+
+If PowerShell blocks activation because of the execution policy, you can
+either adjust the policy for your own environment or continue without
+activating the environment and call `.venv\Scripts\python.exe`
+directly.
+
+### 3. Install Python dependencies
+
+With the virtual environment active:
+
+``` powershell
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+The supplied `requirements.txt` installs the Python packages required by
+ComfyMax. ComfyUI, LM Studio, NVIDIA drivers and FFmpeg are separate
+applications/tools and are not installed by this command.
+
+### 4. Test ComfyUI independently
 
 Start ComfyUI and load the supplied workflow from:
 
@@ -116,35 +163,73 @@ workflow_example/
 Resolve all missing-node and missing-model errors and make at least one
 successful test render.
 
-### 2. Start LM Studio
+This step is important: do not troubleshoot ComfyMax until the example
+workflow renders successfully inside ComfyUI itself.
+
+### 5. Start LM Studio
 
 Start the LM Studio local server and make sure the model you want to use
 for H3 prompt generation is available. For reference-image workflows,
 use a model capable of receiving image input.
 
-### 3. Start ComfyMax
+The default local LM Studio address expected by ComfyMax is:
 
-From the ComfyMax environment:
+``` text
+http://127.0.0.1:1234
+```
+
+### 6. Start ComfyMax
+
+The easiest method on Windows is:
+
+``` powershell
+.\Start_ComfyMax.bat
+```
+
+The startup script prefers the local `.venv` when it exists and otherwise
+falls back to Python on `PATH`.
+
+You can also start ComfyMax manually:
 
 ``` powershell
 streamlit run App.py
 ```
 
-If a startup `.bat` is used, it should point to `App.py`.
+On first launch, ComfyMax automatically creates `config/app.json` from
+`config/app.example.json` if `app.json` does not yet exist.
 
-### 4. Configure Settings
+### 7. Configure Settings
 
-Open **Settings** to test the ComfyUI and LM Studio connections, refresh
-ComfyUI model lists, and select the default:
+Open **Settings** to:
 
--   MiniMax H3 video model / UNET
--   Video VAE
--   Audio VAE
--   Text encoder / CLIP
+-   test the ComfyUI and LM Studio connections;
+-   refresh the model lists reported by ComfyUI;
+-   select the default MiniMax H3 video model / UNET;
+-   select the Video VAE;
+-   select the Audio VAE;
+-   select the Text encoder / CLIP.
 
-Settings are stored separately in `config/settings.json`. When no model
-override is configured, the model already stored in a workflow can
-remain the fallback.
+Settings are stored locally in `config/settings.json`. Both
+`config/app.json` and `config/settings.json` are excluded from Git so
+local machine settings are not committed accidentally.
+
+When no model override is configured, the model already stored in a
+workflow can remain the fallback.
+
+### 8. First functional test
+
+For the first ComfyMax test:
+
+1. Choose one of the supplied reference-image workflows.
+2. Upload the required reference image(s).
+3. Select an LM Studio model.
+4. Generate the H3 prompt.
+5. Review and approve the prompt.
+6. Send it to ComfyUI.
+7. Confirm that the rendered video and metadata appear in ComfyMax.
+
+If this complete cycle works, the local installation is ready for normal
+use.
 
 ## Normal workflow
 
