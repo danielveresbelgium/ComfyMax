@@ -8,6 +8,10 @@ MiniMax H3 workflow easier to use.
 > **Status:** v0.1 is a working local version. The core workflow has
 > been tested with one, two and three reference images.
 
+## ComfyMax in action
+
+![ComfyMax main interface](docs/images/comfymax-main.png)
+
 ## Current features
 
 -   Select prepared ComfyUI API workflows through workflow-specific
@@ -312,6 +316,8 @@ Depending on the mapping, ComfyMax can expose:
 
 Seed `0` means random. The actual generated seed is retained in the
 render metadata so it can be reused manually.
+
+![ComfyMax settings](docs/images/comfymax-settings.png)
 
 ## Model selection
 
