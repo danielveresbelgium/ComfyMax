@@ -78,7 +78,7 @@ The setting is stored locally in `config/settings.json`.
 ## Current features
 
 - Select prepared ComfyUI API workflows through workflow-specific mappings.
-- MiniMax H3 Ref2VA support with 1, 2 or 3 reference images.
+- MiniMax H3 Ref2VA support with up to 9 reference images.
 - Send reference images to multimodal LM Studio models in `<Picture N>` order.
 - Generate structured H3 prompts with duration awareness and H3 dialogue tags.
 - Review, edit and explicitly approve a prompt before rendering.
