@@ -1,0 +1,428 @@
+{
+  "1": {
+    "inputs": {
+      "value": ""
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "(input:prompt) Prompt"
+    }
+  },
+  "92": {
+    "inputs": {
+      "filename_prefix": "ComfyMax/ComfyMax",
+      "format": "auto",
+      "format.codec": "auto",
+      "codec": "auto",
+      "video": [
+        "914:130",
+        0
+      ]
+    },
+    "class_type": "SaveVideo",
+    "_meta": {
+      "title": "(output:video) Video output"
+    }
+  },
+  "129": {
+    "inputs": {
+      "noise_seed": 1009047507707890
+    },
+    "class_type": "RandomNoise",
+    "_meta": {
+      "title": "(Input:seed) Seed"
+    }
+  },
+  "131": {
+    "inputs": {
+      "prompt": [
+        "1",
+        0
+      ],
+      "width": [
+        "902",
+        0
+      ],
+      "height": [
+        "902",
+        1
+      ],
+      "length": [
+        "914:132",
+        1
+      ],
+      "ref_image_size": "match",
+      "clip": [
+        "914:128",
+        0
+      ],
+      "vae": [
+        "914:119",
+        0
+      ],
+      "audio_vae": [
+        "914:120",
+        0
+      ],
+      "ref_images.ref_image_0": [
+        "901",
+        0
+      ],
+      "ref_images.ref_image_1": [
+        "905",
+        0
+      ],
+      "ref_images.ref_image_2": [
+        "906",
+        0
+      ],
+      "ref_images.ref_image_3": [
+        "914",
+        0
+      ],
+      "ref_images.ref_image_4": [
+        "915",
+        0
+      ],
+      "ref_images.ref_image_5": [
+        "916",
+        0
+      ],
+      "ref_images.ref_image_6": [
+        "917",
+        0
+      ]
+    },
+    "class_type": "MiniMaxH3ReferenceToVideo",
+    "_meta": {
+      "title": "MiniMaxH3ReferenceToVideo"
+    }
+  },
+  "133": {
+    "inputs": {
+      "value": 5
+    },
+    "class_type": "PrimitiveFloat",
+    "_meta": {
+      "title": "(input:duration) Duration"
+    }
+  },
+  "901": {
+    "inputs": {
+      "image": "Weerwolf_CharacterSheet.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "REFERENCE IMAGE 1 (<Picture 1>)"
+    }
+  },
+  "902": {
+    "inputs": {
+      "aspect_ratio": "1:1 (Square)",
+      "megapixels": [
+        "903",
+        0
+      ],
+      "multiple": [
+        "914:904",
+        0
+      ]
+    },
+    "class_type": "ResolutionSelector",
+    "_meta": {
+      "title": "(input:aspect_ratio) Aspect Ratio"
+    }
+  },
+  "903": {
+    "inputs": {
+      "value": 0.4
+    },
+    "class_type": "PrimitiveFloat",
+    "_meta": {
+      "title": "(input:resolution) Resolution"
+    }
+  },
+  "905": {
+    "inputs": {
+      "image": "Weerwolf_CharacterSheet.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "REFERENCE IMAGE 2 (<Picture 2>)"
+    }
+  },
+  "906": {
+    "inputs": {
+      "image": "Weerwolf_CharacterSheet.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "REFERENCE IMAGE 3 (<Picture 3>)"
+    }
+  },
+  "913": {
+    "inputs": {
+      "value": 4
+    },
+    "class_type": "PrimitiveInt",
+    "_meta": {
+      "title": "(input:steps) Steps"
+    }
+  },
+  "914": {
+    "inputs": {
+      "image": "Weerwolf_CharacterSheet.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "REFERENCE IMAGE 4 (<Picture 4>)"
+    }
+  },
+  "915": {
+    "inputs": {
+      "image": "Weerwolf_CharacterSheet.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "REFERENCE IMAGE 5 (<Picture 5>)"
+    }
+  },
+  "916": {
+    "inputs": {
+      "image": "Weerwolf_CharacterSheet.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "REFERENCE IMAGE 6 (<Picture 6>)"
+    }
+  },
+  "917": {
+    "inputs": {
+      "image": "Weerwolf_CharacterSheet.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "REFERENCE IMAGE 7 (<Picture 7>)"
+    }
+  },
+  "914:904": {
+    "inputs": {
+      "value": 32
+    },
+    "class_type": "PrimitiveInt",
+    "_meta": {
+      "title": "Resolution multiple"
+    }
+  },
+  "914:119": {
+    "inputs": {
+      "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "VAELoader"
+    }
+  },
+  "914:120": {
+    "inputs": {
+      "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "VAELoader"
+    }
+  },
+  "914:127": {
+    "inputs": {
+      "unet_name": "minimax_h3_fused_refdelta_r1024_turbo8_mystic07_int8_convrot.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "UNETLoader"
+    }
+  },
+  "914:128": {
+    "inputs": {
+      "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+      "type": "minimax",
+      "device": "default"
+    },
+    "class_type": "CLIPLoader",
+    "_meta": {
+      "title": "CLIPLoader"
+    }
+  },
+  "914:135": {
+    "inputs": {
+      "sampler_name": "res_multistep"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "KSamplerSelect"
+    }
+  },
+  "914:132": {
+    "inputs": {
+      "expression": "max(5, round(a * 24)) + (5 - (max(5, round(a * 24)) % 17)) % 17",
+      "values.a": [
+        "133",
+        0
+      ]
+    },
+    "class_type": "ComfyMathExpression",
+    "_meta": {
+      "title": "ComfyMathExpression"
+    }
+  },
+  "914:900": {
+    "inputs": {
+      "sparsity_ratio": 0.9,
+      "block_size": "64",
+      "min_seq_len": 8192,
+      "dense_last_steps": 0,
+      "protect_audio": true,
+      "enabled": true,
+      "dense_steps": "0",
+      "dense_backend": "comfy_kitchen",
+      "disable_fp16_accum": true,
+      "stabilize_motion": false,
+      "reference_protection": false,
+      "model": [
+        "914:127",
+        0
+      ]
+    },
+    "class_type": "H3SLAAttention",
+    "_meta": {
+      "title": "H3 SLA Attention 0.9/64 (their graph)"
+    }
+  },
+  "914:142": {
+    "inputs": {
+      "shift_video": 12,
+      "shift_audio": 3,
+      "model": [
+        "914:900",
+        0
+      ]
+    },
+    "class_type": "MiniMaxH3SigmaShift",
+    "_meta": {
+      "title": "MiniMaxH3SigmaShift"
+    }
+  },
+  "914:126": {
+    "inputs": {
+      "model": [
+        "914:142",
+        0
+      ],
+      "conditioning": [
+        "131",
+        0
+      ]
+    },
+    "class_type": "BasicGuider",
+    "_meta": {
+      "title": "BasicGuider"
+    }
+  },
+  "914:912": {
+    "inputs": {
+      "scheduler": "simple",
+      "steps": [
+        "913",
+        0
+      ],
+      "denoise": 1,
+      "model": [
+        "914:142",
+        0
+      ]
+    },
+    "class_type": "BasicScheduler",
+    "_meta": {
+      "title": "BasicScheduler"
+    }
+  },
+  "914:125": {
+    "inputs": {
+      "noise": [
+        "129",
+        0
+      ],
+      "guider": [
+        "914:126",
+        0
+      ],
+      "sampler": [
+        "914:135",
+        0
+      ],
+      "sigmas": [
+        "914:912",
+        0
+      ],
+      "latent_image": [
+        "131",
+        1
+      ]
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "_meta": {
+      "title": "SamplerCustomAdvanced"
+    }
+  },
+  "914:122": {
+    "inputs": {
+      "samples": [
+        "914:125",
+        0
+      ],
+      "vae": [
+        "914:119",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAEDecode"
+    }
+  },
+  "914:121": {
+    "inputs": {
+      "samples": [
+        "914:125",
+        0
+      ],
+      "vae": [
+        "914:120",
+        0
+      ]
+    },
+    "class_type": "VAEDecodeAudio",
+    "_meta": {
+      "title": "VAEDecodeAudio"
+    }
+  },
+  "914:130": {
+    "inputs": {
+      "fps": 24,
+      "bit_depth": 8,
+      "color_space": "sRGB",
+      "images": [
+        "914:122",
+        0
+      ],
+      "audio": [
+        "914:121",
+        0
+      ]
+    },
+    "class_type": "CreateVideo",
+    "_meta": {
+      "title": "CreateVideo"
+    }
+  }
+}

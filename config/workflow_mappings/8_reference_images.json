@@ -1,0 +1,156 @@
+{
+  "name": "01_ref2va_4step_sla_api",
+  "description": "ComfyMax MiniMax H3 REF2VA 4-step SLA workflow.",
+  "fields": {
+    "prompt": {
+      "node_id": "1",
+      "input": "value",
+      "type": "prompt",
+      "label": "Prompt"
+    },
+    "duration": {
+      "node_id": "133",
+      "input": "value",
+      "type": "select_number",
+      "label": "Duration",
+      "default": 5.0,
+      "options": [
+        5.0,
+        6.0,
+        7.0,
+        8.0,
+        9.0,
+        10.0,
+        12.0,
+        15.0,
+        17.0,
+        20.0
+      ]
+    },
+    "resolution": {
+      "node_id": "903",
+      "input": "value",
+      "type": "select_number",
+      "label": "Resolution",
+      "default": 0.4,
+      "options": [
+        0.4,
+        0.5,
+        0.7,
+        1.0
+      ]
+    },
+    "aspect_ratio": {
+      "node_id": "902",
+      "input": "aspect_ratio",
+      "type": "select",
+      "label": "Aspect ratio",
+      "default": "1:1 (Square)",
+      "options": [
+        "1:1 (Square)",
+        "2:3 (Portrait Photo)",
+        "3:2 (Photo)",
+        "3:4 (Portrait Standard)",
+        "4:3 (Standard)",
+        "9:16 (Portrait Widescreen)",
+        "16:9 (Widescreen)",
+        "21:9 (Ultrawide)"
+      ]
+    },
+    "steps": {
+      "node_id": "913",
+      "input": "value",
+      "type": "integer",
+      "label": "Steps",
+      "default": 4,
+      "min": 0,
+      "max": 30
+    },
+    "picture_1": {
+      "node_id": "901",
+      "input": "image",
+      "type": "image",
+      "label": "Reference image 1"
+    },
+    "picture_2": {
+      "node_id": "905",
+      "input": "image",
+      "type": "image",
+      "label": "Reference image 2"
+    },
+    "picture_3": {
+      "node_id": "906",
+      "input": "image",
+      "type": "image",
+      "label": "Reference image 3"
+    },
+	"picture_4": {
+      "node_id": "914",
+      "input": "image",
+      "type": "image",
+      "label": "Reference image 4"
+    },
+	"picture_5": {
+      "node_id": "915",
+      "input": "image",
+      "type": "image",
+      "label": "Reference image 5"
+    },
+	"picture_6": {
+      "node_id": "916",
+      "input": "image",
+      "type": "image",
+      "label": "Reference image 6"
+    },
+	"picture_7": {
+      "node_id": "917",
+      "input": "image",
+      "type": "image",
+      "label": "Reference image 7"
+    },
+	"picture_8": {
+      "node_id": "918",
+      "input": "image",
+      "type": "image",
+      "label": "Reference image 8"
+    },
+    "unet_model": {
+      "node_id": "914:127",
+      "input": "unet_name",
+      "type": "model_setting",
+      "setting": "minimax_h3.unet",
+      "label": "MiniMax H3 video model"
+    },
+    "video_vae": {
+      "node_id": "914:119",
+      "input": "vae_name",
+      "type": "model_setting",
+      "setting": "minimax_h3.video_vae",
+      "label": "Video VAE"
+    },
+    "audio_vae": {
+      "node_id": "914:120",
+      "input": "vae_name",
+      "type": "model_setting",
+      "setting": "minimax_h3.audio_vae",
+      "label": "Audio VAE"
+    },
+    "text_encoder": {
+      "node_id": "914:128",
+      "input": "clip_name",
+      "type": "model_setting",
+      "setting": "minimax_h3.clip",
+      "label": "Text encoder / CLIP"
+    },
+    "seed": {
+      "node_id": "129",
+      "input": "noise_seed",
+      "type": "integer",
+      "label": "Seed",
+      "default": 0,
+      "min": 0,
+      "max": 9007199254740991
+    }
+  },
+  "h3_mode": "ref2va"
+}
