@@ -54,6 +54,8 @@ if errorlevel 1 (
 echo [OK] Starting ComfyMax...
 echo.
 "%PYTHON%" -m streamlit run App.py
+              --server.adress 0.0.0.0
+			  --server.port 8501
 
 echo.
 echo ComfyMax has been closed.

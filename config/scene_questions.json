@@ -1,0 +1,137 @@
+{
+  "scene_types": {
+    "question": "What kind of scene do you want to create?",
+    "options": [
+      "Conversation",
+      "Romantic scene",
+      "Action scene",
+      "Suspense / thriller",
+      "Everyday situation",
+      "Comedy",
+      "Music video scene"
+    ],
+    "allow_custom": true
+  },
+
+  "location": {
+    "question": "Where does the scene take place?",
+    "options": [
+      "Modern apartment",
+      "Living room",
+      "Kitchen",
+      "Restaurant",
+      "Café",
+      "Bar",
+      "Hotel room",
+      "Office",
+      "City street",
+      "Narrow alley",
+      "Train station",
+      "Park",
+      "Forest",
+      "Beach",
+      "Countryside"
+    ],
+    "allow_custom": true
+  },
+
+  "time_of_day": {
+    "question": "What time of day is it?",
+    "options": [
+      "Early morning",
+      "Morning",
+      "Afternoon",
+      "Golden hour",
+      "Sunset",
+      "Evening",
+      "Night",
+      "Late night"
+    ],
+    "allow_custom": true
+  },
+
+  "character_count": {
+    "question": "How many main characters are in the scene?",
+    "options": [
+      "1",
+      "2",
+      "3"
+    ],
+    "allow_custom": false
+  },
+
+  "character_description": {
+    "question": "Describe Character {character}.",
+    "free_text": true
+  },
+
+  "main_action": {
+    "question": "What is happening in the scene?",
+    "free_text": true
+  },
+
+  "dialogue": {
+    "question": "Is there dialogue in the scene?",
+    "options": [
+      "Yes",
+      "No"
+    ],
+    "allow_custom": false
+  },
+
+  "character_dialogue": {
+    "question": "What does Character {character} say?",
+    "free_text": true
+  },
+
+  "character_speaking_action": {
+    "question": "What is Character {character} doing while speaking?",
+    "free_text": true
+  },
+
+  "additional_dialogue": {
+    "question": "Is there more dialogue?",
+    "options": [
+      "Yes",
+      "No"
+    ],
+    "allow_custom": false
+  },
+  "ending": {
+    "question": "How should the shot end?",
+    "free_text": true
+    },
+  "camera": {
+    "question": "How should the scene be filmed?",
+    "options": [
+      "Static wide shot",
+      "Static medium shot",
+      "Close-up",
+      "Slow push-in",
+      "Slow pull-back",
+      "Tracking shot",
+      "Over-the-shoulder shot",
+      "Slow orbit around the characters",
+      "Handheld camera",
+      "Low-angle shot",
+      "High-angle shot"
+    ],
+    "allow_custom": true
+  },
+  "lighting": {
+    "question": "What lighting and atmosphere should the scene have?",
+    "options": [
+      "Natural daylight",
+      "Soft warm daylight",
+      "Golden-hour sunlight",
+      "Warm indoor lighting",
+      "Soft cinematic lighting",
+      "Low-key dramatic lighting",
+      "Cold atmospheric lighting",
+      "Neon lighting",
+      "Moonlight",
+      "Dark and moody"
+    ],
+    "allow_custom": true
+  }
+}

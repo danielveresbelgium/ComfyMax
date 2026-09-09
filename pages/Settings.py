@@ -83,6 +83,7 @@ app_config = load_json(APP_CONFIG_PATH, {
 saved = load_json(SETTINGS_PATH, {
     "comfyui_url": app_config.get("comfyui_url", "http://127.0.0.1:8188"),
     "lmstudio_url": app_config.get("lmstudio_url", "http://127.0.0.1:1234"),
+    "comfyui_output_folder": "",
     "minimax_h3": {"unet": "", "video_vae": "", "audio_vae": "", "clip": ""},
 })
 
@@ -114,6 +115,43 @@ with t2:
             st.success("LM Studio is reachable.")
         except requests.RequestException as exc:
             st.error(f"LM Studio is unreachable: {exc}")
+
+st.divider()
+st.subheader("ComfyUI folders")
+st.caption(
+    "Set the folder where ComfyUI saves generated videos. "
+    "The Video Gallery will scan this folder and all of its subfolders."
+)
+
+comfyui_output_folder = st.text_input(
+    "ComfyUI output folder",
+    value=saved.get("comfyui_output_folder", ""),
+    placeholder=r"D:\ComfyUI\ComfyUI\output",
+)
+
+if st.button("Test output folder", use_container_width=True):
+    output_path = Path(comfyui_output_folder.strip())
+
+    if not comfyui_output_folder.strip():
+        st.warning("Enter a ComfyUI output folder first.")
+    elif not output_path.exists():
+        st.error("Folder not found.")
+    elif not output_path.is_dir():
+        st.error("The selected path is not a folder.")
+    else:
+        video_extensions = {".mp4", ".webm", ".mov", ".mkv", ".avi", ".m4v"}
+        try:
+            video_count = sum(
+                1
+                for path in output_path.rglob("*")
+                if path.is_file() and path.suffix.lower() in video_extensions
+            )
+            st.success(
+                f"Folder found — {video_count} video"
+                f"{'' if video_count == 1 else 's'} found, including subfolders."
+            )
+        except OSError as exc:
+            st.error(f"The folder could not be scanned: {exc}")
 
 st.divider()
 st.subheader("MiniMax H3 model defaults")
@@ -148,6 +186,7 @@ if st.button("Save settings", type="primary", use_container_width=True):
     new_settings = {
         "comfyui_url": comfyui_url.strip(),
         "lmstudio_url": lmstudio_url.strip(),
+        "comfyui_output_folder": comfyui_output_folder.strip(),
         "minimax_h3": {
             "unet": selected_unet or "",
             "video_vae": selected_video_vae or "",
