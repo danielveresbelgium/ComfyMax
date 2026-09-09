@@ -314,6 +314,77 @@ def unload_comfyui_models(comfy_url: str) -> None:
         raise RuntimeError(f"ComfyUI is unreachable: {exc.reason}") from exc
 
 
+def unload_all_lmstudio_models(lm_url: str) -> int:
+    """Unload every model instance currently loaded in LM Studio."""
+    base_url = lm_url.rstrip("/")
+
+    # ComfyMax may be configured with either the LM Studio server root
+    # or the OpenAI-compatible /v1 base URL. Model management uses /api/v1.
+    if base_url.endswith("/v1"):
+        base_url = base_url[:-3]
+
+    models_url = base_url + "/api/v1/models"
+
+    try:
+        request = urllib.request.Request(models_url, method="GET")
+        with urllib.request.urlopen(request, timeout=10) as response:
+            if not 200 <= response.status < 300:
+                raise RuntimeError(
+                    f"LM Studio returned HTTP status {response.status}."
+                )
+            data = json.loads(response.read().decode("utf-8"))
+    except urllib.error.HTTPError as exc:
+        raise RuntimeError(f"LM Studio returned HTTP {exc.code}.") from exc
+    except urllib.error.URLError as exc:
+        raise RuntimeError(f"LM Studio is unreachable: {exc.reason}") from exc
+    except (json.JSONDecodeError, UnicodeDecodeError) as exc:
+        raise RuntimeError("LM Studio returned an invalid model list.") from exc
+
+    instance_ids: list[str] = []
+
+    for model in data.get("models", []):
+        for instance in model.get("loaded_instances", []) or []:
+            instance_id = instance.get("id")
+            if instance_id:
+                instance_ids.append(str(instance_id))
+
+    if not instance_ids:
+        return 0
+
+    unload_url = base_url + "/api/v1/models/unload"
+    unloaded_count = 0
+
+    for instance_id in instance_ids:
+        payload = json.dumps({"instance_id": instance_id}).encode("utf-8")
+        request = urllib.request.Request(
+            unload_url,
+            data=payload,
+            headers={"Content-Type": "application/json"},
+            method="POST",
+        )
+
+        try:
+            with urllib.request.urlopen(request, timeout=30) as response:
+                if not 200 <= response.status < 300:
+                    raise RuntimeError(
+                        f"LM Studio returned HTTP status {response.status} "
+                        f"while unloading {instance_id}."
+                    )
+            unloaded_count += 1
+        except urllib.error.HTTPError as exc:
+            raise RuntimeError(
+                f"LM Studio returned HTTP {exc.code} while unloading "
+                f"{instance_id}."
+            ) from exc
+        except urllib.error.URLError as exc:
+            raise RuntimeError(
+                f"LM Studio became unreachable while unloading {instance_id}: "
+                f"{exc.reason}"
+            ) from exc
+
+    return unloaded_count
+
+
 def refresh_gpu_monitor_now() -> None:
     """Werk dezelfde GPU-kaart onmiddellijk bij tijdens een blokkerende taak."""
     slot = globals().get("GPU_MONITOR_SLOT")
@@ -408,12 +479,42 @@ with st.sidebar:
             "Use this when you no longer need the model."
         )
 
+        unload_lmstudio_clicked = st.button(
+            "Unload all models from LM Studio",
+            use_container_width=True,
+            key="unload_all_lmstudio_models",
+        )
+        st.caption(
+            "Unloads every model currently loaded in LM Studio and frees the "
+            "memory used by those models."
+        )
+
     if unload_comfy_clicked:
         try:
             unload_comfyui_models(comfy_url)
             time.sleep(0.75)
             refresh_gpu_monitor_now()
             st.success("ComfyUI model unload requested.")
+        except RuntimeError as exc:
+            st.error(str(exc))
+
+    if unload_lmstudio_clicked:
+        try:
+            unloaded_count = unload_all_lmstudio_models(lm_url)
+
+            st.session_state.model_instance_id = None
+            st.session_state.model_name = None
+            st.session_state.model_unloaded = True
+
+            time.sleep(0.75)
+            refresh_gpu_monitor_now()
+
+            if unloaded_count == 0:
+                st.info("No models are currently loaded in LM Studio.")
+            elif unloaded_count == 1:
+                st.success("1 LM Studio model was unloaded.")
+            else:
+                st.success(f"{unloaded_count} LM Studio models were unloaded.")
         except RuntimeError as exc:
             st.error(str(exc))
 
