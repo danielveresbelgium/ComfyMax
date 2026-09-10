@@ -1,4 +1,4 @@
-# ComfyMax v0.2
+# ComfyMax v0.3
 
 ComfyMax is a lightweight Streamlit frontend for creating MiniMax H3 video prompts with LM Studio, reviewing them before rendering, sending approved prompts to ComfyUI, and managing the resulting videos.
 
