@@ -4,11 +4,11 @@ ComfyMax is a lightweight Streamlit frontend for creating MiniMax H3 video promp
 
 The aim is to keep the flexibility of ComfyUI while making the normal MiniMax H3 workflow easier to use for people who do not want to work directly with a large ComfyUI graph every time.
 
-> **Status:** v0.2 is a working local version. ComfyMax now includes the Scene Builder, Video Gallery, Workflow Mapper, persistent ComfyUI output-folder settings, and a Windows update utility.
+> **Status:** v0.3 is a working local version. ComfyMax now includes the Scene Builder, Video Gallery, Workflow Mapper, persistent ComfyUI output-folder settings, and a Windows update utility.
 
 > **New to ComfyMax?** See [INSTALLATION.md](INSTALLATION.md) for the short installation guide.
 
-## What's new in v0.2
+## What's new in v0.3
 
 ### Scene Builder
 
