@@ -4,7 +4,9 @@ ComfyMax is a lightweight Streamlit frontend for creating MiniMax H3 video promp
 
 The aim is to keep the flexibility of ComfyUI while making the normal MiniMax H3 workflow easier to use for people who do not want to work directly with a large ComfyUI graph every time.
 
-> **Status:** v0.2 is a working local version. The core workflow has been tested with one, two and three reference images. This release adds the Scene Builder, Video Gallery and persistent ComfyUI output-folder settings.
+> **Status:** v0.2 is a working local version. ComfyMax now includes the Scene Builder, Video Gallery, Workflow Mapper, persistent ComfyUI output-folder settings, and a Windows update utility.
+
+> **New to ComfyMax?** See [INSTALLATION.md](INSTALLATION.md) for the short installation guide.
 
 ## What's new in v0.2
 
@@ -75,9 +77,43 @@ The Video Gallery reads this saved path automatically, so the folder does not ha
 
 The setting is stored locally in `config/settings.json`.
 
+### Workflow Mapper
+
+A new **Workflow Mapper** page can analyze a ComfyUI workflow exported with **Save (API Format)** and create the matching ComfyMax mapping.
+
+The Mapper can:
+
+- inspect workflow nodes and editable inputs;
+- suggest mappings for prompt, duration, resolution, aspect ratio, steps and seed;
+- detect reference-image inputs;
+- suggest MiniMax H3 model mappings;
+- show mapping confidence and compatibility information;
+- validate node IDs and input names;
+- warn about duplicate mappings;
+- generate and download the mapping JSON;
+- install the API workflow and matching mapping directly into ComfyMax;
+- protect existing workflow/mapping files from accidental replacement.
+
+This makes it possible to add many custom ComfyUI workflows without manually writing the mapping JSON.
+
+### ComfyMax Updater
+
+`Update_ComfyMax.bat` provides a simple Windows update path for Git installations.
+
+The updater:
+
+- checks that Git and the ComfyMax repository are available;
+- checks GitHub for updates;
+- refuses to overwrite locally modified tracked files;
+- leaves untracked user files untouched;
+- updates ComfyMax from the current remote branch;
+- updates Python dependencies from `requirements.txt`.
+
 ## Current features
 
 - Select prepared ComfyUI API workflows through workflow-specific mappings.
+- Analyze and add custom ComfyUI API workflows with the Workflow Mapper.
+- Automatically generate, validate and install matching workflow mappings.
 - MiniMax H3 Ref2VA support with up to 9 reference images.
 - Send reference images to multimodal LM Studio models in `<Picture N>` order.
 - Generate structured H3 prompts with duration awareness and H3 dialogue tags.
@@ -101,6 +137,8 @@ The setting is stored locally in `config/settings.json`.
 - Manual **Unload model from ComfyUI** button to free ComfyUI VRAM when finished.
 - ComfyUI models stay loaded after a render for faster repeated prompt adjustments/renders.
 - LM Studio model is unloaded after prompt generation to make VRAM available to ComfyUI.
+- Manual **Unload all models from LM Studio** button to free VRAM from models already loaded in LM Studio.
+- Update a Git installation with `Update_ComfyMax.bat`.
 
 ## Requirements
 
@@ -142,6 +180,7 @@ ComfyMax/
 ├─ pages/
 │  ├─ Scene_Builder.py
 │  ├─ Video_Gallery.py
+│  ├─ Workflow_Mapper.py
 │  └─ Settings.py
 ├─ modules/
 │  ├─ comfyui.py
@@ -155,98 +194,20 @@ ComfyMax/
 ├─ workflows/
 ├─ workflow_example/
 ├─ Start_ComfyMax.bat
+├─ Update_ComfyMax.bat
 ├─ requirements.txt
+├─ INSTALLATION.md
 ├─ README.md
 └─ .gitignore
 ```
 
 ## Installation
 
-### 1. Download ComfyMax
+For a short step-by-step installation guide, see:
 
-Clone the repository:
+**[INSTALLATION.md](INSTALLATION.md)**
 
-```powershell
-git clone https://github.com/danielveresbelgium/ComfyMax.git
-cd ComfyMax
-```
-
-You can also download the repository as a ZIP from GitHub and extract it to a folder of your choice.
-
-### 2. Create a Python virtual environment
-
-```powershell
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-```
-
-### 3. Install Python dependencies
-
-```powershell
-python -m pip install --upgrade pip
-pip install -r requirements.txt
-```
-
-ComfyUI, LM Studio, NVIDIA drivers and FFmpeg are separate applications/tools and are not installed by this command.
-
-### 4. Test ComfyUI independently
-
-Start ComfyUI and load the supplied workflow from:
-
-```text
-workflow_example/
-```
-
-Resolve all missing-node and missing-model errors and make at least one successful test render.
-
-### 5. Start LM Studio
-
-Start the LM Studio local server and make sure the model you want to use for H3 prompt generation is available.
-
-Default address:
-
-```text
-http://127.0.0.1:1234
-```
-
-### 6. Start ComfyMax
-
-```powershell
-.\Start_ComfyMax.bat
-```
-
-or:
-
-```powershell
-streamlit run App.py
-```
-
-### 7. Configure Settings
-
-Open **Settings** to:
-
-- test the ComfyUI connection;
-- test the LM Studio connection;
-- refresh the model lists reported by ComfyUI;
-- select the default MiniMax H3 video model / UNET;
-- select the Video VAE;
-- select the Audio VAE;
-- select the Text encoder / CLIP;
-- set the ComfyUI output folder;
-- test the output folder and count the videos found recursively.
-
-Settings are stored locally in `config/settings.json`.
-
-### 8. First functional test
-
-1. Choose one of the supplied reference-image workflows.
-2. Upload the required reference image(s).
-3. Select an LM Studio model.
-4. Generate the H3 prompt.
-5. Review and approve the prompt.
-6. Send it to ComfyUI.
-7. Confirm that the rendered video and metadata appear in ComfyMax.
-8. Open Video Gallery and confirm that the rendered video is detected.
+The installation guide covers the required software, cloning ComfyMax, creating the virtual environment, installing dependencies, testing the supplied ComfyUI workflow, starting LM Studio and ComfyUI, and the first ComfyMax launch.
 
 ## Normal workflow
 
@@ -394,6 +355,36 @@ API workflow JSON files live in `workflows/`.
 
 Matching mapping files live in `config/workflow_mappings/`.
 
+The workflow and mapping use the same filename.
+
+### Adding your own workflow
+
+ComfyMax includes a **Workflow Mapper** for custom ComfyUI workflows.
+
+1. Open the workflow in ComfyUI.
+2. Export it with **Save (API Format)**.
+3. Open **Workflow Mapper** in ComfyMax.
+4. Upload the API workflow JSON.
+5. Review the automatically suggested mappings.
+6. Check the compatibility report and warnings.
+7. Use **Add workflow to ComfyMax**.
+
+The Mapper installs the API workflow in `workflows/` and the generated mapping in `config/workflow_mappings/`.
+
+If files with the same name already exist, explicit confirmation is required before they can be replaced.
+
+## Updating ComfyMax
+
+For Git installations, run:
+
+```text
+Update_ComfyMax.bat
+```
+
+The updater checks GitHub for changes and updates the Python dependencies afterwards.
+
+For safety, the update stops if tracked ComfyMax files have been modified locally. Untracked user files are left untouched.
+
 ## Access from another device
 
 Because ComfyMax uses Streamlit, it can also be opened from another device on the same local network when Streamlit is listening on the network interface and the Windows firewall allows the connection.
@@ -442,6 +433,24 @@ nvidia-smi
 
 Check that all required images are uploaded, the final prompt is not empty, the prompt is approved, and the selected workflow has a matching mapping.
 
+### Workflow Mapper cannot install a workflow
+
+Make sure the workflow was exported from ComfyUI with **Save (API Format)** and resolve any validation errors shown by the Mapper.
+
+Warnings about duplicate mappings should be reviewed before installation.
+
+### Update_ComfyMax.bat stops because local changes were found
+
+The updater deliberately protects modified tracked files.
+
+Run:
+
+```powershell
+git status
+```
+
+Review the listed files. Commit intentional changes or restore unwanted changes before running the updater again.
+
 ## Current scope
 
 ComfyMax v0.2 is focused on MiniMax H3, simple local operation, explicit prompt review, reusable ComfyUI workflows, structured scene preparation and local video management.
@@ -476,6 +485,7 @@ Test the complete path:
 8. Manual ComfyUI model unload.
 9. Scene Builder prompt creation and copy.
 10. Video Gallery detection of the rendered video.
+11. Workflow Mapper analysis, validation and installation for any workflow you distribute.
 
 ## License
 
