@@ -362,7 +362,7 @@ The workflow and mapping use the same filename.
 ComfyMax includes a **Workflow Mapper** for custom ComfyUI workflows.
 
 1. Open the workflow in ComfyUI.
-2. Export it with **Save (API Format)**.
+2. Export it with **Export (API Format)**.
 3. Open **Workflow Mapper** in ComfyMax.
 4. Upload the API workflow JSON.
 5. Review the automatically suggested mappings.
